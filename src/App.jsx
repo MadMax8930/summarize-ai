@@ -1,6 +1,19 @@
+import Hero from './components/Hero';
+import Summary from './components/Summary';
+import './App.css';
+
 const App = () => {
   return (
-    <div>App</div>
+    <main>
+      <div className='main'>
+         <div className='gradient'/>
+      </div>
+
+      <div className='app'>
+         <Hero />
+         <Summary />
+      </div>
+    </main>
   )
 }
 
