@@ -8,7 +8,7 @@ const Summary = () => {
    });
 
    const handleSubmit = async (e) => {
-      // Fetch Summary
+      // Fetch Summary (API request to an AI GPT summarizer)
       alert('Submitted')
    };
 

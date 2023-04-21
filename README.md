@@ -9,6 +9,7 @@
 npm install @reduxjs/toolkit
 npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init -p
+npm install react-redux
 ``` 
 
 ### Development server:
