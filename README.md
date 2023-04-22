@@ -1,6 +1,7 @@
-## React application bootstraped with Vite [`npm create vite@latest`]
+## SaaS type application using React/Redux/Tailwind made with Vite [`npm create vite@latest`]
+AI Summarizer summarizes any articles from the web. Just provide a link (and optionally the number of paragraphs). Enjoy!
 
-### RapidAPI: 
+### Fetching from RapidAPI: 
 [Article Extractor and Summarizer](https://rapidapi.com/restyler/api/article-extractor-and-summarizer)
 
 ### Dependencies
@@ -17,8 +18,8 @@ npx tailwindcss init -p
 npm run dev
 ```
 
-### Tailwind Docs:
-[Tailwind with Vite](https://tailwindcss.com/docs/guides/vite)
+### Tailwind:
+[Tailwind with Vite](https://tailwindcss.com/docs/guides/vite) documentation
 
 ### Redux Toolkit:
 [Redux docs](https://redux.js.org/introduction/getting-started) for more details
