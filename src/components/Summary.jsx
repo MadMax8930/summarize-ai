@@ -9,7 +9,7 @@ const Summary = () => {
    const [getSummary, { error, isFetching }] = useLazyGetSummaryQuery();
 
    useEffect(() => {
-      const articleFromLocalStorage = JSON.parse(localStorage.getItem('articles')) 
+      const articleFromLocalStorage = JSON.parse(localStorage.getItem('articles'))
 
       if (articleFromLocalStorage) {
          setLinkHistory(articleFromLocalStorage)
@@ -72,7 +72,7 @@ const Summary = () => {
             {linkHistory.map((item, index) => (
                <div
                   key={`link-${index}`}
-                  onClick={() => setArticle(item)}
+                  onClick={() => setArticle(item)} // no api call
                   className='link_card'
                >
                   <div className='copy_btn' onClick={() => handleCopy(item.url)}>

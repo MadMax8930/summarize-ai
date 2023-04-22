@@ -19,8 +19,3 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </Provider>
   </React.StrictMode>,
 )
-
-// Store is the global state of the app 
-// Reducer is a slice or potion of our whole state
-// Middleware is a piece of code that can modify the state
-// Provider will wrap and service the app with a store 
