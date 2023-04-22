@@ -1,15 +1,14 @@
 ## React application bootstraped with Vite [`npm create vite@latest`]
 
 ### RapidAPI: 
-[Coinranking](https://rapidapi.com/Coinranking/api/coinranking1)
+[Article Extractor and Summarizer](https://rapidapi.com/restyler/api/article-extractor-and-summarizer)
 
 ### Dependencies
 
 ```bash
-npm install @reduxjs/toolkit
+npm install react-redux @reduxjs/toolkit 
 npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init -p
-npm install react-redux
 ``` 
 
 ### Development server:
@@ -25,4 +24,4 @@ npm run dev
 [Redux docs](https://redux.js.org/introduction/getting-started) for more details
 
 ### Deployment
-[Project deployed]() on Netlify.
+[Project deployed](https://summarize-ai.vercel.app) on Vercel.
