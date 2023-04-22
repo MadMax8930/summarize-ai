@@ -3,20 +3,21 @@ import { copy, linkIcon, loader, tick, paragraph } from '../assets';
 import { useLazyGetSummaryQuery } from '../services/article';
 
 const Summary = () => {
-   const [article, setArticle] = useState({ url: '', len: '', summary: '' });
+   const [article, setArticle] = useState({ url: '', len: 20, summary: '' });
    const [linkHistory, setLinkHistory] = useState([]);
-   const [getSummary, { data, isLoading }] = useLazyGetSummaryQuery();
+   const [copied, setCopied] = useState('');
+   const [getSummary, { error, isFetching }] = useLazyGetSummaryQuery();
 
    useEffect(() => {
-      const articleFromLocalStorage = JSON.parse(localStorage.getItem('articles')) // To give the data back to us
+      const articleFromLocalStorage = JSON.parse(localStorage.getItem('articles')) 
 
       if (articleFromLocalStorage) {
          setLinkHistory(articleFromLocalStorage)
       }
-   }, []); // Empty -> executed at the start of the app
+   }, []);
 
    const handleSubmit = async (e) => {
-      e.preventDefault();  // Browser won't reload application
+      e.preventDefault();
       // API request
       const { data } = await getSummary({ articleUrl: article.url, pLength: article.len });
 
@@ -27,9 +28,15 @@ const Summary = () => {
          setArticle(newArticle);
          setLinkHistory(updatedAllArticles);
          
-         localStorage.setItem('articles', JSON.stringify(updatedAllArticles)) // ls Only can contain strings
+         localStorage.setItem('articles', JSON.stringify(updatedAllArticles))
       }
    };
+
+   const handleCopy = (copyUrl) => {
+      setCopied(copyUrl);
+      navigator.clipboard.writeText(copyUrl);
+      setTimeout(() => setCopied(false), 3000);
+   }
 
   return (
     <section className='w-full max-w-xl mt-16 '>
@@ -48,7 +55,7 @@ const Summary = () => {
                    className='url_input peer'
             />
             <img src={paragraph} alt='paragraph icon' 
-                 className='absolute right-20 my-2 md:mr-5 sm:mr-2 mr-0 w-5'/>
+                 className='absolute right-[50px] my-2 sm:mr-12 mr-3 w-5'/>
             <input type='number'
                    placeholder='፨'
                    value={article.len}
@@ -65,11 +72,13 @@ const Summary = () => {
             {linkHistory.map((item, index) => (
                <div
                   key={`link-${index}`}
-                  onClick={() => setArticle(item)} // without making a call
+                  onClick={() => setArticle(item)}
                   className='link_card'
                >
-                  <div className='copy_btn'>
-                     <img src={copy} alt='copy icon' className='w-[40%] h-[40%] object-contain'/>
+                  <div className='copy_btn' onClick={() => handleCopy(item.url)}>
+                     <img src={copied === item.url ? tick : copy} 
+                          alt='copy icon' 
+                          className='w-[40%] h-[40%] object-contain'/>
                   </div>
                   <p className='history_p'>{item.url}</p>
                </div>
@@ -77,8 +86,21 @@ const Summary = () => {
          </div>
       </div>
       {/* Display Results */}
-      <div className=''>
-
+      <div className='flex justify-center items-center my-10 max-w-full'>
+         {isFetching 
+            ? (<img src={loader} alt='loader' className='w-20 h-20 object-contain'/>) 
+            : error ? (
+               <p className='error_p'>Well, that was not supposed to happen ...<br/>
+               <span className='font-satoshi text-gray-700'>{error?.data?.error}</span></p>)
+            : (article.summary && 
+                  (<div className='flex flex-col gap-3'>
+                     <h2 className='artical_h2'>Article <span className='blue_gradient'>Summary</span></h2>
+                     <div className='summary_box'>
+                        <p className='summary_p'>{article.summary}</p>
+                     </div>
+                  </div>)
+              )
+          }
       </div>
     </section>
   )

@@ -15,7 +15,7 @@ const store = configureStore({
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+        <App />
     </Provider>
   </React.StrictMode>,
 )
@@ -23,4 +23,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 // Store is the global state of the app 
 // Reducer is a slice or potion of our whole state
 // Middleware is a piece of code that can modify the state
-// Provider will service the app with a store 
+// Provider will wrap and service the app with a store 
