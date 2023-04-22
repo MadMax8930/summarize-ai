@@ -25,4 +25,4 @@ npm run dev
 [Redux docs](https://redux.js.org/introduction/getting-started) for more details
 
 ### Deployment
-[Project deployed](https://summarize-ai.vercel.app) on Vercel.
+[Project deployed](https://aisummarize.netlify.app) on Netlify.
