@@ -4,8 +4,16 @@ import { useLazyGetSummaryQuery } from '../services/article';
 
 const Summary = () => {
    const [article, setArticle] = useState({ url: '', len: '', summary: '' });
+   const [linkHistory, setLinkHistory] = useState([]);
    const [getSummary, { data, isLoading }] = useLazyGetSummaryQuery();
-   const [allArticles, setAllArticles] = useState([]);
+
+   useEffect(() => {
+      const articleFromLocalStorage = JSON.parse(localStorage.getItem('articles')) // To give the data back to us
+
+      if (articleFromLocalStorage) {
+         setLinkHistory(articleFromLocalStorage)
+      }
+   }, []); // Empty -> executed at the start of the app
 
    const handleSubmit = async (e) => {
       e.preventDefault();  // Browser won't reload application
@@ -14,11 +22,12 @@ const Summary = () => {
 
       if (data?.summary) {
          const newArticle = { ...article, summary: data.summary };
-         const updatedAllArticles = [newArticle, ...allArticles];
+         const updatedAllArticles = [newArticle, ...linkHistory];
 
          setArticle(newArticle);
-         setAllArticles(updatedAllArticles);
-         console.log(newArticle);
+         setLinkHistory(updatedAllArticles);
+         
+         localStorage.setItem('articles', JSON.stringify(updatedAllArticles)) // ls Only can contain strings
       }
    };
 
@@ -39,9 +48,9 @@ const Summary = () => {
                    className='url_input peer'
             />
             <img src={paragraph} alt='paragraph icon' 
-                 className='absolute right-20 my-2 mr-4 w-5'/>
+                 className='absolute right-20 my-2 md:mr-5 sm:mr-2 mr-0 w-5'/>
             <input type='number'
-                   placeholder='XX'
+                   placeholder='፨'
                    value={article.len}
                    onChange={(e) => setArticle({...article, len: e.target.value})}
                    className='num_input peer-focus:border-gray-700 peer-focus:text-gray-700' 
@@ -52,8 +61,25 @@ const Summary = () => {
             </button>
          </form>
          {/* Browser URL History */}
+         <div className='flex flex-col gap-1 max-h-60 overflow-y-auto'>
+            {linkHistory.map((item, index) => (
+               <div
+                  key={`link-${index}`}
+                  onClick={() => setArticle(item)} // without making a call
+                  className='link_card'
+               >
+                  <div className='copy_btn'>
+                     <img src={copy} alt='copy icon' className='w-[40%] h-[40%] object-contain'/>
+                  </div>
+                  <p className='history_p'>{item.url}</p>
+               </div>
+            ))}
+         </div>
       </div>
       {/* Display Results */}
+      <div className=''>
+
+      </div>
     </section>
   )
 }
